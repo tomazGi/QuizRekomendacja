@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Losowy film</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="container">
+<h1>Wylosowany Film</h1>
+
+<div th:if="${movie != null}">
+    <h2 th:text="${movie.title}">Tytuł</h2>
+    <p><strong>Data premiery:</strong> <span th:text="${movie.releaseDate}">data</span></p>
+    <p><strong>Opis:</strong> <span th:text="${movie.overview}">opis</span></p>
+    <img th:src="'https://image.tmdb.org/t/p/w300' + ${movie.posterPath}" alt="Plakat"/>
+</div>
+
+<form action="/random-movie" method="get">
+    <button type="submit">Wylosuj inny film</button>
+</form>
+</div>
+</body>
+</html>

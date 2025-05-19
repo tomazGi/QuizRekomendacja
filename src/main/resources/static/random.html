@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Popularne Filmy</title>
+</head>
+<body>
+<div class="container">
+<h1>Popularne Filmy</h1>
+<ul>
+    <li th:each="movie : ${movies}">
+        <strong th:text="${movie.title}">Tytuł</strong><br/>
+        <span th:text="${movie.releaseDate}">Data premiery</span><br/>
+        <p th:text="${movie.overview}">Opis</p>
+        <img th:src="'https://image.tmdb.org/t/p/w200' + ${movie.posterPath}" alt="Plakat"/><br/><br/>
+    </li>
+</ul>
+</div>
+
+</body>
+</html>
