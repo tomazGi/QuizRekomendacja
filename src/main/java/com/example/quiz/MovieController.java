@@ -2,6 +2,8 @@ package com.example.quiz;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 import org.springframework.ui.Model;
@@ -28,4 +30,22 @@ public class MovieController {
         model.addAttribute("movie", randomMovie);
         return "random"; // → szablon random.html
     }
+
+    @GetMapping("/form")
+    public String showForm(Model model) {
+        return "form";
+    }
+
+    @PostMapping("/search")
+    public String searchMovies(
+            @RequestParam(required = true) String genreId,
+            @RequestParam(required = true) Integer year,
+            @RequestParam(defaultValue = "movie") String type,
+            Model model) {
+
+        MovieResponse response  = tmdbService.advancedSearch(type, genreId, year).block();
+        model.addAttribute("movies", response.getMovies());
+        return "movies";
+    }
+
 }

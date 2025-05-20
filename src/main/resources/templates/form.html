@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Wyszukiwarka filmów</title></head>
+<body>
+<h1>Wyszukaj film lub serial</h1>
+
+<form th:action="@{/search}" method="post">
+  <label>Gatunek:</label>
+  <select name="genreId">
+    <option value="">-- wybierz --</option>
+    <option value="28">Akcja</option>
+    <option value="35">Komedia</option>
+    <option value="18">Dramat</option>
+    <option value="10749">Romans</option>
+    <option value="27">Horror</option>
+    <option value="16">Animacja</option>
+    <option value="37">Western</option>
+    <!-- Dodaj więcej wg TMDb genre IDs -->
+  </select><br>
+
+  <label>Rok produkcji:</label>
+  <input type="number" name="year" min="1900" max="2099"><br>
+
+  <label>Typ:</label>
+  <select name="type">
+    <option value="movie">Film</option>
+    <option value="tv">Serial</option>
+  </select><br>
+
+  <button type="submit">Szukaj</button>
+</form>
+</body>
+</html>

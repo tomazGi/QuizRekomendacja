@@ -2,12 +2,12 @@ package com.example.quiz.ai;
 
 
         import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.stereotype.Controller;
         import org.springframework.web.bind.annotation.*;
         import java.util.List;
         import java.util.Map;
 
-@RestController
-@RequestMapping("/api")
+@Controller
 @CrossOrigin // umożliwia ewentualne żądania z innej domeny (tutaj niekonieczne, bo frontend jest serwowany lokalnie)
 public class QuizController {
 
@@ -17,8 +17,7 @@ public class QuizController {
     // Endpoint GET zwracający listę pytań quizu
     @GetMapping("/questions")
     public List<Question> getQuizQuestions() {
-        // Możemy generować pytania dynamicznie przez OpenAI lub zwrócić stałą listę
-        // Tutaj używamy OpenAI do wygenerowania pytań za każdym wywołaniem:
+
         List<Question> questions = openAiService.generateQuestions();
         return questions;
     }
