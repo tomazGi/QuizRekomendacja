@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Popularne Filmy</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div class="container">
+  <h1 th:if="${title != null}"
+      th:text="${title}"/>
+  <ul>
+    <li th:each="movie : ${movies}">
+      <strong th:text="${movie.title}">Tytuł</strong><br/>
+      <span th:text="${movie.releaseDate}">Data premiery</span><br/>
+      <p th:text="${movie.overview}">Opis</p>
+      <img th:src="'https://image.tmdb.org/t/p/w200' + ${movie.posterPath}" alt="Plakat"/><br/><br/>
+    </li>
+  </ul>
+</div>
+<h2>Strona: <span th:text="${currentPage}"></span> / <span th:text="${totalPages}"></span></h2>
+
+<div>
+  <a th:if="${currentPage > 1}"
+     th:href="@{|/search?page=${currentPage - 1}|}">« Poprzednia</a>
+
+  <a th:if="${currentPage < totalPages}"
+     th:href="@{|/search?page=${currentPage + 1}|}">Następna »</a>
+</div>
+</body>
+
+</html>

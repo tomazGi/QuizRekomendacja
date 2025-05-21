@@ -8,7 +8,8 @@
 </head>
 <body>
 <div class="container">
-<h1>Popularne Filmy</h1>
+<h1 th:if="${title != null}"
+        th:text="${title}"/>
 <ul>
     <li th:each="movie : ${movies}">
         <strong th:text="${movie.title}">Tytuł</strong><br/>
@@ -17,6 +18,15 @@
         <img th:src="'https://image.tmdb.org/t/p/w200' + ${movie.posterPath}" alt="Plakat"/><br/><br/>
     </li>
 </ul>
+</div>
+<h2>Strona: <span th:text="${currentPage}"></span> / <span th:text="${totalPages}"></span></h2>
+
+<div>
+    <a th:if="${currentPage > 1}"
+       th:href="@{|/genres/${genreId}?page=${currentPage - 1}|}">« Poprzednia</a>
+
+    <a th:if="${currentPage < totalPages}"
+       th:href="@{|/genres/${genreId}?page=${currentPage + 1}|}">Następna »</a>
 </div>
 </body>
 

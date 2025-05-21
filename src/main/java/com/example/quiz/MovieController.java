@@ -1,10 +1,7 @@
 package com.example.quiz;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import org.springframework.ui.Model;
 
@@ -17,10 +14,11 @@ public class MovieController {
         this.tmdbService = tmdbService;
     }
 
-    @GetMapping("/movies")
+    @GetMapping("/popularMovies")
     public String showMovies(Model model) {
         MovieResponse response = tmdbService.getPopularMovies().block(); // UWAGA: .block() tylko w kontrolerze MVC
         model.addAttribute("movies", response.getMovies());
+        model.addAttribute("title", "Popularne filmy:");
         return "movies"; // Szablon: templates/movies.html
     }
 
@@ -28,6 +26,7 @@ public class MovieController {
     public String showRandomMovie(Model model) {
         Movie randomMovie = tmdbService.getRandomMovie().block(); // blokujemy tylko tu!
         model.addAttribute("movie", randomMovie);
+        model.addAttribute("title", "Wylosowany film:");
         return "random"; // → szablon random.html
     }
 
@@ -41,10 +40,28 @@ public class MovieController {
             @RequestParam(required = true) String genreId,
             @RequestParam(required = true) Integer year,
             @RequestParam(defaultValue = "movie") String type,
+            @RequestParam(name = "page", defaultValue = "1") int page,
             Model model) {
 
-        MovieResponse response  = tmdbService.advancedSearch(type, genreId, year).block();
+        MovieResponse response  = tmdbService.advancedSearch(type, genreId, year, page).block();
         model.addAttribute("movies", response.getMovies());
+        model.addAttribute("currentPage", response.getPage());
+        model.addAttribute("totalPages", response.getTotalPages());
+        model.addAttribute("title", "Wyniki wyszukiwania:");
+        return "popular";
+    }
+
+    @GetMapping("/genres/{id}")
+    public String showMoviesByGenre(@PathVariable("id") int genreId,
+                                    @RequestParam(name = "page", defaultValue = "1") int page,
+                                    Model model) {
+
+        MovieResponse response  = tmdbService.getMoviesByGenre(genreId, page).block();
+        model.addAttribute("movies", response.getMovies());
+        model.addAttribute("currentPage", response.getPage());
+        model.addAttribute("totalPages", response.getTotalPages());
+        model.addAttribute("genreId", genreId);
+        model.addAttribute("title", "Gatunek: "+tmdbService.getGenreNameById(genreId));
         return "movies";
     }
 
