@@ -18,10 +18,10 @@
       <img th:src="'https://image.tmdb.org/t/p/w200' + ${movie.posterPath}" alt="Plakat"/><br/><br/>
     </li>
   </ul>
-</div>
+
 <h2>Strona: <span th:text="${currentPage}"></span> / <span th:text="${totalPages}"></span></h2>
 
-<div>
+
   <a th:if="${currentPage > 1}"
      th:href="@{|/search?page=${currentPage - 1}|}">« Poprzednia</a>
 
