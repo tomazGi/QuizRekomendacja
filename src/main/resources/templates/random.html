@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Losowy film</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" th:href="@{style.css}" />
 </head>
 <body>
 <div class="container">
@@ -17,7 +17,7 @@
 </div>
 
 <form action="/random-movie" method="get">
-    <button type="submit">Wylosuj inny film</button>
+    <button style="font-size: medium" type="submit">Wylosuj inny film</button>
 </form>
 </div>
 </body>

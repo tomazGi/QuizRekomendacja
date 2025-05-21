@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head><title>Quiz film web</title></head>
+<link rel="stylesheet" th:href="@{style.css}" />
 <body>
-<h1>Odpowiedz na poniższe pytania, a zaproponujemy Ci film lub serial dopasowany do Twojego gustu!</h1>
-
+<div class="container">
+<h3>Odpowiedz na poniższe pytania, a zaproponujemy Ci film lub serial dopasowany do Twojego gustu!</h3>
 <form th:action="@{/search}" method="post">
   <label>Gatunek:</label>
   <select name="genreId">
@@ -29,5 +30,6 @@
 
   <button type="submit">Szukaj</button>
 </form>
+</div>
 </body>
 </html>

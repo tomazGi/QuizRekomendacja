@@ -48,7 +48,7 @@ public class MovieController {
         model.addAttribute("currentPage", response.getPage());
         model.addAttribute("totalPages", response.getTotalPages());
         model.addAttribute("title", "Wyniki wyszukiwania:");
-        return "popular";
+        return "result";
     }
 
     @GetMapping("/genres/{id}")
