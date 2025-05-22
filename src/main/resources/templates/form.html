@@ -6,9 +6,8 @@
 <div class="container">
 <h3>Odpowiedz na poniższe pytania, a zaproponujemy Ci film lub serial dopasowany do Twojego gustu!</h3>
 <form th:action="@{/search}" method="post">
-  <label>Gatunek:</label>
+  <label>Jakiego gatunku filmu teraz szukasz?</label>
   <select name="genreId">
-    <option value="">-- wybierz --</option>
     <option value="28">Akcja</option>
     <option value="35">Komedia</option>
     <option value="18">Dramat</option>
@@ -16,16 +15,31 @@
     <option value="27">Horror</option>
     <option value="16">Animacja</option>
     <option value="37">Western</option>
-    <!-- Dodaj więcej wg TMDb genre IDs -->
+    <option value="14">Sci-fi / Fantasy</option>
   </select><br>
 
-  <label>Rok produkcji:</label>
-  <input type="number" name="year" min="1900" max="2099"><br>
+  <label>Z którego okresu ma być film?</label>
+  <select name="year">
+    <option value="1">Klasyk (przed 2000)</option>
+    <option value="2">Starszy (2001–2015)</option>
+    <option value="3"> Nowszy (2016–2020)</option>
+    <option value="4">Najnowszy (2021–2025)</option>
+  </select><br>
 
-  <label>Typ:</label>
-  <select name="type">
-    <option value="movie">Film</option>
-    <option value="tv">Serial</option>
+  <label>W jakim języku wolisz oglądać?:</label>
+  <select name="lang">
+    <option value="en">Angielski</option>
+    <option value="pl">Polski</option>
+    <option value="">Bez znaczenia</option>
+  </select><br>
+
+
+  <label>Jak długi film Ci odpowiada?</label>
+  <select name="time">
+    <option value="1">Krótki (do 90 min)</option>
+    <option value="2">Standardowy (90–120 min)</option>
+    <option value="3">Długi (120+ min)</option>
+    <option value="4">Bez znaczenia</option>
   </select><br>
 
   <button type="submit">Szukaj</button>

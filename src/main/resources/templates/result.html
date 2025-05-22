@@ -19,14 +19,15 @@
     </li>
   </ul>
 
-<h2>Strona: <span th:text="${currentPage}"></span> / <span th:text="${totalPages}"></span></h2>
+  <h2>Strona: <span th:text="${currentPage}"></span> / <span th:text="${totalPages}"></span></h2>
 
+  <div>
+    <a th:if="${currentPage > 1}"
+       th:href="@{|/search?page=${currentPage - 1}|}">« Poprzednia</a>
 
-  <a th:if="${currentPage > 1}"
-     th:href="@{|/search?page=${currentPage - 1}|}">« Poprzednia</a>
-
-  <a th:if="${currentPage < totalPages}"
-     th:href="@{|/search?page=${currentPage + 1}|}">Następna »</a>
+    <a th:if="${currentPage < totalPages}"
+       th:href="@{|/search?page=${currentPage + 1}|}">Następna »</a>
+  </div>
 </div>
 </body>
 

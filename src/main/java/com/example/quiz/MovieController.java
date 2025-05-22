@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import org.springframework.ui.Model;
 
+import java.util.Optional;
+
 @Controller
 public class MovieController {
 
@@ -15,11 +17,14 @@ public class MovieController {
     }
 
     @GetMapping("/popularMovies")
-    public String showMovies(Model model) {
-        MovieResponse response = tmdbService.getPopularMovies().block(); // UWAGA: .block() tylko w kontrolerze MVC
+    public String showMovies( @RequestParam(name = "page", defaultValue = "1") int page,
+                              Model model) {
+        MovieResponse response = tmdbService.getPopularMovies(page).block();
         model.addAttribute("movies", response.getMovies());
+        model.addAttribute("currentPage", response.getPage());
+        model.addAttribute("totalPages", response.getTotalPages());
         model.addAttribute("title", "Popularne filmy:");
-        return "movies"; // Szablon: templates/movies.html
+        return "popular"; // Szablon: templates/movies.html
     }
 
     @GetMapping("/random-movie")
@@ -35,15 +40,17 @@ public class MovieController {
         return "form";
     }
 
+    //  //genreId, lang, long, year
     @PostMapping("/search")
     public String searchMovies(
             @RequestParam(required = true) String genreId,
-            @RequestParam(required = true) Integer year,
-            @RequestParam(defaultValue = "movie") String type,
+            @RequestParam(required = true) String year,
+            @RequestParam(required = true) Optional<String> lang,
+            @RequestParam(required = true) String time,
             @RequestParam(name = "page", defaultValue = "1") int page,
             Model model) {
 
-        MovieResponse response  = tmdbService.advancedSearch(type, genreId, year, page).block();
+        MovieResponse response  = tmdbService.advancedSearch(genreId, year, lang, time, page).block();
         model.addAttribute("movies", response.getMovies());
         model.addAttribute("currentPage", response.getPage());
         model.addAttribute("totalPages", response.getTotalPages());
