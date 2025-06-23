@@ -40,13 +40,30 @@ public class MovieController {
         return "form";
     }
 
+    @GetMapping("/search/{genreId}")
+    public String searchMoviesGet(
+            @RequestParam(name = "genreId", defaultValue = "1") String genreId,
+            @RequestParam(name = "year", defaultValue = "1") String year,
+            @RequestParam(name = "lang", defaultValue = "1") Optional<String> lang,
+            @RequestParam(name = "time", defaultValue = "1") String time,
+            @RequestParam(name = "page", defaultValue = "1") int page,
+            Model model) {
+
+        MovieResponse response  = tmdbService.advancedSearch(genreId, year, lang, time, page).block();
+        model.addAttribute("movies", response.getMovies());
+        model.addAttribute("currentPage", response.getPage());
+        model.addAttribute("totalPages", response.getTotalPages());
+        model.addAttribute("title", "Wyniki wyszukiwania:");
+        return "result";
+    }
+
     //  //genreId, lang, long, year
     @PostMapping("/search")
     public String searchMovies(
-            @RequestParam(required = true) String genreId,
-            @RequestParam(required = true) String year,
-            @RequestParam(required = true) Optional<String> lang,
-            @RequestParam(required = true) String time,
+            @RequestParam(name = "genreId", defaultValue = "1") String genreId,
+            @RequestParam(name = "year", defaultValue = "1") String year,
+            @RequestParam(name = "lang", defaultValue = "1") Optional<String> lang,
+            @RequestParam(name = "time", defaultValue = "1") String time,
             @RequestParam(name = "page", defaultValue = "1") int page,
             Model model) {
 

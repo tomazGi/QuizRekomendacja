@@ -2,11 +2,13 @@ package com.example.quiz;
 
 
 import jakarta.annotation.PostConstruct;
+import org.apache.commons.codec.DecoderException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -17,10 +19,10 @@ public class TmdbService {
 
     private final WebClient webClient;
 
-    @Value("${tmdb.api.key}")
-    private String apiKey;
 
-    public TmdbService(WebClient webClient) {
+     private String apiKey = getKeyApi("YzAxM2NkZjYzMzMyZDdhYjJjOTYyMzFkODQyYWY3N2Y=");;
+
+    public TmdbService(WebClient webClient) throws DecoderException, NoSuchAlgorithmException {
         this.webClient = webClient;
     }
 
@@ -30,6 +32,15 @@ public class TmdbService {
     public void initGenres() {
         List<GenreDto> genres = getGenresFromTmdb();
         genreMap = genres.stream().collect(Collectors.toMap(GenreDto::getId, GenreDto::getName));
+    }
+
+    public String getKeyApi(String apiKeyHash) throws NoSuchAlgorithmException, DecoderException {
+//        String encodedString = Base64.getEncoder().encodeToString(apiKeyHash.getBytes());
+//        System.out.println(encodedString);
+        byte[] decodedBytes = Base64.getDecoder().decode(apiKeyHash);
+        String decodedString = new String(decodedBytes);
+        return decodedString;
+
     }
 
     public List<GenreDto> getGenresFromTmdb() {
@@ -101,7 +112,7 @@ public class TmdbService {
                 .retrieve()
                 .bodyToMono(MovieResponse.class);
     }
-//genreId, year, lang, longth, page
+    //genreId, year, lang, longth, page
     public Mono<MovieResponse> advancedSearch(String genreId,
                                               String year, Optional<String> lang, String time, int page) {
 
@@ -111,23 +122,23 @@ public class TmdbService {
         System.out.println(year+" "+timeInt+" "+lang+" "+page);
         return webClient.get()
                 .uri(uriBuilder ->  {
-            var builder = uriBuilder
-                        .path("/discover/movie")
-                        .queryParam("api_key", apiKey)
-                        .queryParam("language", "pl-PL")
-                        .queryParam("with_original_language", lang)
-                        .queryParam("sort_by", "popularity.desc")
-                        .queryParam("page", page)
-                        .queryParam("with_genres", genreId)//gatunek
-                        .queryParam("primary_release_date.gte", getRangeYear(yearInt).start() + "-01-01")
-                        .queryParam("primary_release_date.lte", getRangeYear(yearInt).end() + "-12-31")
+                    var builder = uriBuilder
+                            .path("/discover/movie")
+                            .queryParam("api_key", apiKey)
+                            .queryParam("language", "pl-PL")
+                            .queryParam("with_original_language", lang)
+                            .queryParam("sort_by", "popularity.desc")
+                            .queryParam("page", page)
+                            .queryParam("with_genres", genreId)//gatunek
+                            .queryParam("primary_release_date.gte", getRangeYear(yearInt).start() + "-01-01")
+                            .queryParam("primary_release_date.lte", getRangeYear(yearInt).end() + "-12-31")
 //                        .queryParam("with_original_language", lang)
-                        .queryParam("with_runtime.gte", getRangeTime(timeInt).start())
-                        .queryParam("with_runtime.lte", getRangeYear(timeInt).end())
-                        .queryParam("type","movie");
+                            .queryParam("with_runtime.gte", getRangeTime(timeInt).start())
+                            .queryParam("with_runtime.lte", getRangeYear(timeInt).end())
+                            .queryParam("type","movie");
 
                     lang.ifPresent(language -> builder.queryParam("with_original_language", language));
-                        return builder.build();
+                    return builder.build();
                 })
                 .retrieve()
                 .bodyToMono(MovieResponse.class);

@@ -1,49 +1,138 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head><title>Quiz film web</title></head>
-<link rel="stylesheet" th:href="@{style.css}" />
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuizFix – Quiz</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 700px;
+      margin: 60px auto;
+      padding: 30px;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: #ffcc00;
+      text-shadow: 0 0 20px #ffcc00;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #ccc;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    fieldset {
+      border: none;
+      margin-bottom: 25px;
+    }
+
+    legend {
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .option {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .option input[type="radio"] {
+      margin-right: 10px;
+      transform: scale(1.2);
+    }
+
+    button {
+      margin-top: 30px;
+      width: 100%;
+      padding: 15px;
+      font-size: 1.2rem;
+      background-color: #ffcc00;
+      border: none;
+      border-radius: 6px;
+      color: #203a43;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #ffdb4d;
+    }
+  </style>
+</head>
 <body>
 <div class="container">
-<h3>Odpowiedz na poniższe pytania, a zaproponujemy Ci film lub serial dopasowany do Twojego gustu!</h3>
-<form th:action="@{/search}" method="post">
-  <label>Jakiego gatunku filmu teraz szukasz?</label>
-  <select name="genreId">
-    <option value="28">Akcja</option>
-    <option value="35">Komedia</option>
-    <option value="18">Dramat</option>
-    <option value="10749">Romans</option>
-    <option value="27">Horror</option>
-    <option value="16">Animacja</option>
-    <option value="37">Western</option>
-    <option value="14">Sci-fi / Fantasy</option>
-  </select><br>
+  <h1>🎯 QuizFix</h1>
+  <p>Odpowiedz na poniższe pytania, a zaproponujemy Ci film lub serial dopasowany do Twojego gustu!</p>
 
-  <label>Z którego okresu ma być film?</label>
-  <select name="year">
-    <option value="1">Klasyk (przed 2000)</option>
-    <option value="2">Starszy (2001–2015)</option>
-    <option value="3"> Nowszy (2016–2020)</option>
-    <option value="4">Najnowszy (2021–2025)</option>
-  </select><br>
+  <form th:action="@{/search}" method="post">
 
-  <label>W jakim języku wolisz oglądać?:</label>
-  <select name="lang">
-    <option value="en">Angielski</option>
-    <option value="pl">Polski</option>
-    <option value="">Bez znaczenia</option>
-  </select><br>
+    <fieldset>
+      <legend>Jakiego gatunku filmu teraz szukasz?</legend>
+      <div class="option"><input type="radio" name="genreId" value="28"> Akcja</div>
+      <div class="option"><input type="radio" name="genreId" value="35"> Komedia</div>
+      <div class="option"><input type="radio" name="genreId" value="18"> Dramat</div>
+      <div class="option"><input type="radio" name="genreId" value="10749"> Romans</div>
+      <div class="option"><input type="radio" name="genreId" value="27"> Horror</div>
+      <div class="option"><input type="radio" name="genreId" value="16"> Animacja</div>
+      <div class="option"><input type="radio" name="genreId" value="37"> Western</div>
+      <div class="option"><input type="radio" name="genreId" value="14"> Sci-fi / Fantasy</div>
+    </fieldset>
 
+    <fieldset>
+      <legend>Z którego okresu ma być film?</legend>
+      <div class="option"><input type="radio" name="year" value="1"> Klasyk (przed 2000)</div>
+      <div class="option"><input type="radio" name="year" value="2"> Starszy (2001–2015)</div>
+      <div class="option"><input type="radio" name="year" value="3"> Nowszy (2016–2020)</div>
+      <div class="option"><input type="radio" name="year" value="4"> Najnowszy (2021–2025)</div>
+    </fieldset>
 
-  <label>Jak długi film Ci odpowiada?</label>
-  <select name="time">
-    <option value="1">Krótki (do 90 min)</option>
-    <option value="2">Standardowy (90–120 min)</option>
-    <option value="3">Długi (120+ min)</option>
-    <option value="4">Bez znaczenia</option>
-  </select><br>
+    <fieldset>
+      <legend>W jakim języku wolisz oglądać?</legend>
+      <div class="option"><input type="radio" name="lang" value="en"> Angielski</div>
+      <div class="option"><input type="radio" name="lang" value="pl"> Polski</div>
+      <div class="option"><input type="radio" name="lang" value=""> Bez znaczenia</div>
+    </fieldset>
 
-  <button type="submit">Szukaj</button>
-</form>
+    <fieldset>
+      <legend>Jak długi film Ci odpowiada?</legend>
+      <div class="option"><input type="radio" name="time" value="1"> Krótki (do 90 min)</div>
+      <div class="option"><input type="radio" name="time" value="2"> Standardowy (90–120 min)</div>
+      <div class="option"><input type="radio" name="time" value="3"> Długi (120+ min)</div>
+      <div class="option"><input type="radio" name="time" value="4"> Bez znaczenia</div>
+    </fieldset>
+
+    <button type="submit">🔍 Szukaj</button>
+  </form>
 </div>
 </body>
 </html>

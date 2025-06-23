@@ -1,34 +1,117 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Popularne Filmy</title>
-  <link rel="stylesheet" th:href="@{style.css}" />
+  <title>Popularne Filmy – QuizFix</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: white;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 3rem;
+      color: #ffcc00;
+      text-shadow: 0 0 15px #ffcc00;
+      margin-bottom: 40px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background-color: rgba(255, 255, 255, 0.05);
+      margin-bottom: 30px;
+      padding: 20px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+    }
+
+    img {
+      width: 120px;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    .movie-details {
+      flex-grow: 1;
+    }
+
+    .movie-details strong {
+      font-size: 1.4rem;
+      color: white;
+    }
+
+    .movie-details span {
+      font-size: 1rem;
+      color: #ccc;
+      display: block;
+      margin: 8px 0;
+    }
+
+    .movie-details p {
+      color: #aaa;
+      font-size: 0.95rem;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+      align-items: center;
+      font-size: 1.1rem;
+    }
+
+    .pagination a {
+      color: #ffcc00;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .pagination a:hover {
+      color: #ffd633;
+    }
+  </style>
 </head>
 <body>
 <div class="container">
-  <h1 th:if="${title != null}"
-      th:text="${title}"/>
+  <h1 th:if="${title != null}" th:text="${title}">Popularne Filmy</h1>
   <ul>
     <li th:each="movie : ${movies}">
-      <strong th:text="${movie.title}">Tytuł</strong><br/>
-      <span th:text="${movie.releaseDate}">Data premiery</span><br/>
-      <p th:text="${movie.overview}">Opis</p>
-      <img th:src="'https://image.tmdb.org/t/p/w200' + ${movie.posterPath}" alt="Plakat"/><br/><br/>
+      <img th:src="'https://image.tmdb.org/t/p/w200' + ${movie.posterPath}" alt="Plakat" />
+      <div class="movie-details">
+        <strong th:text="${movie.title}">Tytuł</strong>
+        <span th:text="${movie.releaseDate}">Data premiery</span>
+        <p th:text="${movie.overview}">Opis</p>
+      </div>
     </li>
   </ul>
-
-<h2>Strona: <span th:text="${currentPage}"></span> / <span th:text="${totalPages}"></span></h2>
-
-<div>
-  <a th:if="${currentPage > 1}"
-     th:href="@{|/popularMovies?page=${currentPage - 1}|}">« Poprzednia</a>
-
-  <a th:if="${currentPage < totalPages}"
-     th:href="@{|/popularMovies?page=${currentPage + 1}|}">Następna »</a>
-</div>
+  <div class="pagination">
+    <a th:if="${currentPage > 1}" th:href="@{|/popularMovies?page=${currentPage - 1}|}">« Poprzednia</a>
+    <span>Strona: <span th:text="${currentPage}"></span> / <span th:text="${totalPages}"></span></span>
+    <a th:if="${currentPage < totalPages}" th:href="@{|/popularMovies?page=${currentPage + 1}|}">Następna »</a>
+  </div>
 </div>
 </body>
-
 </html>

@@ -1,24 +1,140 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quiz Filmowy – Rekomendator</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizFix</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            height: 100%;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            text-align: center;
+            color: #ffcc00;
+            text-shadow: 0 0 20px #ffcc00, 0 0 40px #ffcc00;
+        }
+
+        p {
+            font-size: 1.4rem;
+            color: #ccc;
+            text-align: center;
+            max-width: 700px;
+            margin: 10px 0 40px;
+        }
+
+        .main-section {
+            display: flex;
+            gap: 40px;
+            width: 100%;
+            height: 100%;
+            flex-grow: 1;
+        }
+
+        .main-buttons {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        .category-buttons {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        .btn-main {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: none;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 40px;
+            border-radius: 16px;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-main:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-link {
+            color: #ffcc00;
+            font-size: 1.4rem;
+            text-decoration: none;
+            transition: color 0.3s;
+            text-align: left;
+            padding: 10px;
+        }
+
+        .btn-link:hover {
+            color: #ffd633;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #ffcc00;
+            text-align: left;
+            padding-left: 10px;
+        }
+    </style>
 </head>
 <body>
-
 <div class="container">
-    <h1>🎬Quiz Film Web</h1>
-    <p>Odpowiedz na poniższe pytania, a zaproponujemy Ci film lub serial dopasowany do Twojego gustu!</p>
-    <a href="form">Quiz</a>
-    <a href="popularMovies">Popularne filmy</a>
-    <a href="genres/28">Akcja</a>
-    <a href="genres/35">Komedia</a>
-    <a href="genres/18">Dramat</a>
-    <a href="random-movie">Losowy film</a>
-</div>
+    <h1>🎬 QuizFix</h1>
+    <p>Fixuje problem "co oglądać wieczorem"</p>
 
-<script src="script.js"></script>
+    <div class="main-section">
+        <div class="main-buttons">
+            <div class="section-title">Narzędzia</div>
+            <a href="form" class="btn-main">🎯 Rozpocznij Quiz</a>
+            <a href="random-movie" class="btn-main">🎲 Losowy Film</a>
+            <a href="popularMovies" class="btn-main">🔥 Popularne Filmy</a>
+        </div>
+        <div class="category-buttons">
+            <div class="section-title">Kategorie filmów</div>
+            <a href="genres/28" class="btn-link">🎬 Akcja</a>
+            <a href="genres/35" class="btn-link">🎞️ Komedia</a>
+            <a href="genres/18" class="btn-link">🎭 Dramat</a>
+            <a href="genres/10749" class="btn-link">❤️ Romans</a>
+            <a href="genres/27" class="btn-link">👻 Horror</a>
+            <a href="genres/16" class="btn-link">🐭 Animacja</a>
+            <a href="genres/37" class="btn-link">🤠 Western</a>
+            <a href="genres/14" class="btn-link">🚀 Sci-fi / Fantasy</a>
+        </div>
+    </div>
+</div>
 </body>
 </html>
